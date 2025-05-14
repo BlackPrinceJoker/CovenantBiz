@@ -194,7 +194,7 @@
                     const modalBody = document.querySelector('#businessModal .modal-body');
                     modalBody.innerHTML = `                       
                         <img src="${business.id + ".png"}" class="card-img-top" alt="${business.name}">
-                        <p id="modalDescription">${business.description || 'No description available.'}</p>
+                        <p id="modalDescription" class="fw-semibold">${business.description || 'No description available.'}</p>
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
                         <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
                         <p><span class="highlight">Services:</span> ${business.services || 'No services listed.'}</p>
