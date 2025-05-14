@@ -189,11 +189,16 @@
                 `;
                 // Add click event to open modal
                 card.addEventListener('click', () => {
+                    // Get the card's image
+                    const cardImage = card.querySelector('.card-img-top');
+                    const imageSrc = cardImage ? cardImage.src : `${business.id + '.png'}`; // Fallback to business.id
+                    const imageAlt = cardImage ? cardImage.alt : business.name || 'Business Image'; // Fallback to business.name
+                    
                     document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
                     
                     const modalBody = document.querySelector('#businessModal .modal-body');
                     modalBody.innerHTML = `
-                        <img id="modalImage" src="${business.id + '.png'}" alt="${business.name || 'Business Image'}">
+                        <img id="modalImage" src="${imageSrc}" alt="${imageAlt}">
                         <p id="modalDescription">${business.description || 'No description available.'}</p>
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
                         <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
