@@ -194,7 +194,8 @@
                     document.getElementById('modalImage').alt = business.name || 'Business Image';
                     document.getElementById('modalDescription').textContent = business.description || 'No description available.';
                     document.getElementById('modalAddress').textContent = business.address || 'No address available.';
-                    document.getElementById('modalPhone').textContent = business.phone || 'No phone available.';
+                    document.getElementById('modalPhone').textContent = business.phone || 'No phone available.';                    
+                    document.getElementById('modalServices').textContent = business.services || 'No services listed.';
                     const websiteLink = document.getElementById('modalWebsite');
                     websiteLink.href = business.website || '#';
                     websiteLink.textContent = business.website ? 'Visit Website' : 'No Website Available';
