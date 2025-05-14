@@ -195,8 +195,8 @@
                     modalBody.innerHTML = `
                         <img id="modalImage" src="${business.id + '.png'}" alt="${business.name || 'Business Image'}">
                         <p id="modalDescription">${business.description || 'No description available.'}</p>
-                        <p id="modalAddress">${business.address || 'No address available.'}</p>
-                        <p id="modalPhone">${business.phone || 'No phone available.'}</p>
+                        <p id="modalAddress"><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
+                        <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
                         <p><span class="highlight">Services:</span> ${business.services || 'No services listed.'}</p>
                         <a href="${business.website || '#'}" class="btn accent-bg mt-3">Visit Website</a>
                     `;
