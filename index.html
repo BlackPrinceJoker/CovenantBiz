@@ -196,7 +196,6 @@
                     document.getElementById('modalAddress').textContent = business.address || 'No address available.';
                     document.getElementById('modalPhone').textContent = business.phone || 'No phone available.';
                     const modalBody = document.querySelector('#businessModal .modal-body');
-                    modalBody.innerHTML = ""
                     modalBody.innerHTML += `
                         <p><span class="highlight">Services:</span> ${business.services || 'No services liste.'}</p>
                         <a href="${business.website || '#'}" class="btn accent-bg mt-3">Visit Website</a>
