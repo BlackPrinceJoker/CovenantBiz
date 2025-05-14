@@ -1,4 +1,4 @@
-name,description,address,phone,image
-Sunny Cafe,Cozy coffee shop with artisanal blends,123 Main St  Downtown,(555) 123-4567,https://via.placeholder.com/300x200?text=Sunny+Cafe
-Green Thumb Nursery,Your local plant and gardening experts,456 Oak Ave Suburbia,(555) 987-6543,https://via.placeholder.com/300x200?text=Green+Thumb
-Tech Repair Hub,Fast and reliable gadget repairs,789 Tech Blvd City Center,(555) 456-7890,https://via.placeholder.com/300x200?text=Tech+Repair
+name,description,address,phone,image,id
+Sunny Cafe,Cozy coffee shop with artisanal blends,123 Main St  Downtown,(555) 123-4567,1
+Green Thumb Nursery,Your local plant and gardening experts,456 Oak Ave Suburbia,(555) 987-6543,2
+Tech Repair Hub,Fast and reliable gadget repairs,789 Tech Blvd City Center,(555) 456-7890,3
