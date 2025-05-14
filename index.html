@@ -189,13 +189,14 @@
                 `;
                 // Add click event to open modal
                 card.addEventListener('click', () => { 
+                    const modalBody = document.querySelector('#businessModal .modal-body');
+                    modalBody.innerHTML = ""
                     document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
                     document.getElementById('modalImage').src = business.id + ".png";
                     document.getElementById('modalImage').alt = business.name || 'Business Image';
                     document.getElementById('modalDescription').textContent = business.description || 'No description available.';
                     document.getElementById('modalAddress').textContent = business.address || 'No address available.';
                     document.getElementById('modalPhone').textContent = business.phone || 'No phone available.';
-                    const modalBody = document.querySelector('#businessModal .modal-body');
                     modalBody.innerHTML += `
                         <p><span class="highlight">Services:</span> ${business.services || 'No services liste.'}</p>
                         <a href="${business.website || '#'}" class="btn accent-bg mt-3">Visit Website</a>
