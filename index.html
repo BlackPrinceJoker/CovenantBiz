@@ -189,22 +189,16 @@
                 `;
                 // Add click event to open modal
                 card.addEventListener('click', () => {
-                    document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
-                    document.getElementById('modalImage').src = business.id + ".png";
-                    document.getElementById('modalImage').alt = business.name || 'Business Image';
-                    document.getElementById('modalDescription').textContent = business.description || 'No description available.';
-                    document.getElementById('modalAddress').textContent = business.address || 'No address available.';
-                    document.getElementById('modalPhone').textContent = business.phone || 'No phone available.';                    
-                    document.getElementById('modalServices').textContent = business.services || 'No services listed.';
-                    const websiteLink = document.getElementById('modalWebsite');
-                    websiteLink.href = business.website || '#';
-                    websiteLink.textContent = business.website ? 'Visit Website' : 'No Website Available';
-                    if (!business.website) {
-                        websiteLink.classList.add('text-muted');
-                        websiteLink.removeAttribute('href');
-                    } else {
-                        websiteLink.classList.remove('text-muted');
-                    }
+                    const modalBody = document.querySelector('#businessModal .modal-body');
+                    modalBody.innerHTML = `
+                        <img src="${business.id + ".png"}" class="modal-image" alt="${business.name}">
+                        <h5 class="modal-title">${business.name}</h5>
+                        <p class="modal-description">${business.description || 'No description available.'}</p>
+                        <p><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
+                        <p><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
+                        <p><span class="highlight">Services:</span> ${business.services || 'No services liste.'}</p>
+                        <a href="${business.website || '#'}" class="btn accent-bg mt-3">Visit Website</a>
+                    `;
                     const modal = new bootstrap.Modal(document.getElementById('businessModal'));
                     modal.show();
                 });
