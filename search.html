@@ -7,8 +7,6 @@
     <link rel="icon" type="image/x-icon" href="icon.png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <style>
         /* Custom styles for hover effects and specific colors */
         .card {
@@ -23,7 +21,7 @@
             color: #5ba235;
         }
         .accent-bg {
-            background-color: #87bd6a; 
+            background-color: #87bd6a;
         }
         .header-bg {
             background: linear-gradient(to right, #a4dd86, #FFFFFF);
@@ -51,14 +49,18 @@
             max-height: 60vh;
             overflow-y: auto;
         }
-        .select2-container--default .select2-selection--multiple {
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
+        .service-button {
+            margin: 5px;
+            transition: background-color 0.2s;
         }
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
-            background-color: #87bd6a;
-            color: white;
-            border: none;
+        .service-button.active {
+            background-color: #5ba235 !important;
+            color: white !important;
+        }
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -93,13 +95,12 @@
     <!-- Main Content -->
     <main class="container py-5">
         <h2 class="display-6 text-center fw-semibold text-dark mb-4">Search Christian Businesses</h2>
-        <div class="row mb-4">
-            <div class="col-md-6 mx-auto">
-                <label for="servicesFilter" class="form-label fw-semibold">Filter by Services</label>
-                <select id="servicesFilter" class="form-select" multiple></select>
-            </div>
+        <div class="mb-4">
+            <label class="form-label fw-semibold">Filter by Services</label>
+            <div id="servicesFilter" class="d-flex flex-wrap"></div>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" id="business-cards"></div>
+        <div id="errorMessage" class="error-message"></div>
     </main>
 
     <!-- Modal for Business Details -->
@@ -135,22 +136,37 @@
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        // Function to parse CSV
+        // Function to parse CSV with regex
         function parseCSV(csvText) {
-            const rows = csvText.trim().split('\n');
-            const headers = rows[0].split(',').map(header => header.trim().toLowerCase());
+            const rows = [];
+            const regex = /("([^"]*)"|([^,]*))(?=,|\n|$)/g;
+            let currentRow = [];
+            csvText.split('\n').forEach(line => {
+                currentRow = [];
+                let match;
+                while ((match = regex.exec(line)) !== null) {
+                    const field = match[2] || match[3] || '';
+                    currentRow.push(field.trim());
+                }
+                if (currentRow.length > 0 && currentRow.some(field => field)) {
+                    rows.push(currentRow);
+                }
+                regex.lastIndex = 0; // Reset regex for next line
+            });
+
+            if (rows.length === 0) return [];
+
+            const headers = rows[0].map(header => header.trim().toLowerCase());
             const data = [];
             for (let i = 1; i < rows.length; i++) {
-                const cols = rows[i].split(',').map(col => col.trim());
+                const cols = rows[i];
                 const obj = {};
                 headers.forEach((header, index) => {
-                    obj[header] = cols[index] || '';
+                    obj[header] = cols[index] ? cols[index].trim() : '';
                 });
-                // Split services into an array
-                obj.servicesArray = obj.services ? obj.services.split(',').map(s => s.trim()) : [];
+                // Split services on spaces
+                obj.servicesArray = obj.services ? obj.services.split(/\s+/).map(s => s.trim()).filter(s => s) : [];
                 data.push(obj);
             }
             return data;
@@ -166,12 +182,17 @@
         function createBusinessCards(businesses) {
             const container = document.getElementById('business-cards');
             container.innerHTML = ''; // Clear existing cards
+            if (businesses.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">No businesses found.</p>';
+                return;
+            }
             businesses.forEach(business => {
                 const card = document.createElement('div');
                 card.className = 'col';
+                card.dataset.services = business.servicesArray.join(' ');
                 card.innerHTML = `
                     <div class="card h-100 border-0 shadow-sm">
-                        <img src="${business.id + '.png'}" class="card-img-top" alt="${business.name || 'Business Image'}">
+                        <img src="${business.id ? business.id + '.png' : 'placeholder.png'}" class="card-img-top" alt="${business.name || 'Business Image'}">
                         <div class="card-body">
                             <h3 class="card-title fs-4 fw-semibold">${business.name || 'Unknown Business'}</h3>
                             <p class="card-text text-muted">${business.description || 'No description available.'}</p>
@@ -182,10 +203,10 @@
                     </div>
                 `;
                 // Add click event to open modal
-                card.addEventListener('click', (event) => {
-                    // Hybrid image handling: pull from card, create new in modal
+                card.addEventListener('click', () => {
+                    // Hybrid image handling
                     const cardImage = card.querySelector('.card-img-top');
-                    const imageSrc = cardImage ? cardImage.src : `${business.id + '.png'}`;
+                    const imageSrc = cardImage ? cardImage.src : (business.id ? business.id + '.png' : 'placeholder.png');
                     const imageAlt = cardImage ? cardImage.alt : business.name || 'Business Image';
 
                     document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
@@ -215,47 +236,77 @@
             });
         }
 
-        // Function to initialize services filter
+        // Function to initialize services filter with bubble buttons
         function initializeServicesFilter(businesses) {
-            const select = document.getElementById('servicesFilter');
+            const container = document.getElementById('servicesFilter');
             const services = getUniqueServices(businesses);
             services.forEach(service => {
-                const option = document.createElement('option');
-                option.value = service;
-                option.textContent = service;
-                select.appendChild(option);
-            });
-
-            // Initialize Select2
-            $(select).select2({
-                placeholder: 'Select services',
-                allowClear: true,
-                width: '100%'
-            });
-
-            // Filter businesses on selection change
-            $(select).on('change', () => {
-                const selectedServices = $(select).val() || [];
-                const filteredBusinesses = selectedServices.length === 0
-                    ? businesses
-                    : businesses.filter(business =>
-                        business.servicesArray.some(service =>
-                            selectedServices.includes(service)
-                        )
-                    );
-                createBusinessCards(filteredBusinesses);
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'btn btn-outline-secondary btn-sm rounded-pill service-button';
+                button.textContent = service;
+                button.dataset.service = service;
+                button.addEventListener('click', () => {
+                    button.classList.toggle('active');
+                    filterBusinesses();
+                });
+                container.appendChild(button);
             });
         }
 
+        // Function to filter businesses by hiding/displaying
+        function filterBusinesses() {
+            const activeButtons = document.querySelectorAll('#servicesFilter .service-button.active');
+            const selectedServices = Array.from(activeButtons).map(btn => btn.dataset.service);
+            const cards = document.querySelectorAll('#business-cards .col');
+
+            cards.forEach(card => {
+                const cardServices = card.dataset.services ? card.dataset.services.split(' ') : [];
+                if (selectedServices.length === 0 || selectedServices.some(service => cardServices.includes(service))) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show message if no cards are visible
+            const visibleCards = Array.from(cards).filter(card => card.style.display !== 'none');
+            const container = document.getElementById('business-cards');
+            if (visibleCards.length === 0 && selectedServices.length > 0) {
+                container.innerHTML = '<p class="text-center text-muted">No businesses match the selected services.</p>';
+                cards.forEach(card => card.style.display = 'none'); // Ensure all cards stay hidden
+            } else if (container.innerHTML.includes('No businesses match')) {
+                container.innerHTML = '';
+                cards.forEach(card => container.appendChild(card)); // Restore cards
+                filterBusinesses(); // Reapply filter
+            }
+        }
+
         // Load and process CSV
+        let businesses = [];
         fetch('businesses.csv')
-            .then(response => response.text())
-            .then(csvText => {
-                const businesses = parseCSV(csvText);
-                initializeServicesFilter(businesses);
-                createBusinessCards(businesses); // Initial display of all businesses
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}: Could not load businesses.csv`);
+                }
+                return response.text();
             })
-            .catch(error => console.error('Error loading CSV:', error));
+            .then(csvText => {
+                console.log('Raw CSV:', csvText); // Debug
+                businesses = parseCSV(csvText);
+                console.log('Parsed Businesses:', businesses); // Debug
+                if (businesses.length === 0) {
+                    document.getElementById('errorMessage').textContent = 'No businesses found in the data.';
+                    return;
+                }
+                initializeServicesFilter(businesses);
+                createBusinessCards(businesses);
+                console.log('Cards Created:', document.querySelectorAll('#business-cards .col').length); // Debug
+            })
+            .catch(error => {
+                console.error('Error loading CSV:', error);
+                document.getElementById('errorMessage').textContent = 'Error loading business data. Please check if businesses.csv exists and try again.';
+            });
 
         // Reset modal on close
         document.getElementById('businessModal').addEventListener('hidden.bs.modal', () => {
