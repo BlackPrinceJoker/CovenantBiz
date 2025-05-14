@@ -1,1 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenant Pages - Search</title>
+    <link rel="icon" type="image/x-icon" href="icon.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for hover effects and specific colors */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .highlight {
+            color: #5ba235;
+        }
+        .accent-bg {
+            background-color: #87bd6a; 
+        }
+        .header-bg {
+            background: linear-gradient(to right, #a4dd86, #FFFFFF);
+        }
+        .title-font {
+            font-family: 'Poppins', sans-serif;
+        }
+        .modal-content {
+            border-radius: 10px;
+        }
+        .modal-header {
+            background-color: #a4dd86;
+            color: #fff;
+        }
+        #modalImage {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 300px;
+            display: block;
+            margin: 0 auto;
+        }
+        .modal-body {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #87bd6a;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="header-bg shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <div class="container-fluid">
+                <a class="navbar-brand title fw-bold fs-4 text-dark" href="#">
+                    <img src="logo.png" alt="Covenant Pages Logo" style="height: 40px; margin-right: 10px;">Covenant Pages
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark active" aria-current="page" href="search.html">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
+    <!-- Main Content -->
+    <main class="container py-5">
+        <h2 class="display-6 text-center fw-semibold text-dark mb-4">Search Christian Businesses</h2>
+        <div class="row mb-4">
+            <div class="col-md-6 mx-auto">
+                <label for="servicesFilter" class="form-label fw-semibold">Filter by Services</label>
+                <select id="servicesFilter" class="form-select" multiple></select>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" id="business-cards"></div>
+    </main>
+
+    <!-- Modal for Business Details -->
+    <div class="modal fade" id="businessModal" tabindex="-1" aria-labelledby="businessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="businessModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" class="img-fluid mb-3" id="modalImage" alt="">
+                    <p id="modalDescription"></p>
+                    <p><span class="highlight">Address:</span> <span id="modalAddress"></span></p>
+                    <p><span class="highlight">Phone:</span> <span id="modalPhone"></span></p>
+                    <p><span class="highlight">Services:</span> <span id="modalServices"></span></p>
+                    <p><span class="highlight">Website:</span> <a id="modalWebsite" class="text-decoration-underline text-reset"></a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4">
+        <div class="container text-center">
+            <p class="text-muted mb-0">© 2025 Covenant Pages. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // Function to parse CSV
+        function parseCSV(csvText) {
+            const rows = csvText.trim().split('\n');
+            const headers = rows[0].split(',').map(header => header.trim().toLowerCase());
+            const data = [];
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].split(',').map(col => col.trim());
+                const obj = {};
+                headers.forEach((header, index) => {
+                    obj[header] = cols[index] || '';
+                });
+                // Split services into an array
+                obj.servicesArray = obj.services ? obj.services.split(',').map(s => s.trim()) : [];
+                data.push(obj);
+            }
+            return data;
+        }
+
+        // Function to get unique services
+        function getUniqueServices(businesses) {
+            const allServices = businesses.flatMap(b => b.servicesArray);
+            return [...new Set(allServices)].filter(s => s).sort();
+        }
+
+        // Function to create business cards
+        function createBusinessCards(businesses) {
+            const container = document.getElementById('business-cards');
+            container.innerHTML = ''; // Clear existing cards
+            businesses.forEach(business => {
+                const card = document.createElement('div');
+                card.className = 'col';
+                card.innerHTML = `
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="${business.id + '.png'}" class="card-img-top" alt="${business.name || 'Business Image'}">
+                        <div class="card-body">
+                            <h3 class="card-title fs-4 fw-semibold">${business.name || 'Unknown Business'}</h3>
+                            <p class="card-text text-muted">${business.description || 'No description available.'}</p>
+                            <p class="text-muted small"><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
+                            <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
+                            <a href="${business.website || '#'}" class="btn accent-bg mt-3">Visit Website</a>
+                        </div>
+                    </div>
+                `;
+                // Add click event to open modal
+                card.addEventListener('click', (event) => {
+                    // Hybrid image handling: pull from card, create new in modal
+                    const cardImage = card.querySelector('.card-img-top');
+                    const imageSrc = cardImage ? cardImage.src : `${business.id + '.png'}`;
+                    const imageAlt = cardImage ? cardImage.alt : business.name || 'Business Image';
+
+                    document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
+                    const modalBody = document.querySelector('#businessModal .modal-body');
+                    modalBody.innerHTML = `
+                        <img id="modalImage" src="${imageSrc}" alt="${imageAlt}" class="img-fluid mb-3">
+                        <p id="modalDescription">${business.description || 'No description available.'}</p>
+                        <p><span class="highlight">Address:</span> <span id="modalAddress">${business.address || 'No address available.'}</span></p>
+                        <p><span class="highlight">Phone:</span> <span id="modalPhone">${business.phone || 'No phone available.'}</span></p>
+                        <p><span class="highlight">Services:</span> <span id="modalServices">${business.services || 'No services listed.'}</span></p>
+                        <p><span class="highlight">Website:</span> <a id="modalWebsite" href="${business.website || '#'}" class="text-decoration-underline text-reset">${business.website || 'No website available.'}</a></p>
+                    `;
+                    const modal = new bootstrap.Modal(document.getElementById('businessModal'));
+                    modal.show();
+                });
+                container.appendChild(card);
+            });
+
+            // Add hover effects
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('border-primary', 'border-2');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('border-primary', 'border-2');
+                });
+            });
+        }
+
+        // Function to initialize services filter
+        function initializeServicesFilter(businesses) {
+            const select = document.getElementById('servicesFilter');
+            const services = getUniqueServices(businesses);
+            services.forEach(service => {
+                const option = document.createElement('option');
+                option.value = service;
+                option.textContent = service;
+                select.appendChild(option);
+            });
+
+            // Initialize Select2
+            $(select).select2({
+                placeholder: 'Select services',
+                allowClear: true,
+                width: '100%'
+            });
+
+            // Filter businesses on selection change
+            $(select).on('change', () => {
+                const selectedServices = $(select).val() || [];
+                const filteredBusinesses = selectedServices.length === 0
+                    ? businesses
+                    : businesses.filter(business =>
+                        business.servicesArray.some(service =>
+                            selectedServices.includes(service)
+                        )
+                    );
+                createBusinessCards(filteredBusinesses);
+            });
+        }
+
+        // Load and process CSV
+        fetch('businesses.csv')
+            .then(response => response.text())
+            .then(csvText => {
+                const businesses = parseCSV(csvText);
+                initializeServicesFilter(businesses);
+                createBusinessCards(businesses); // Initial display of all businesses
+            })
+            .catch(error => console.error('Error loading CSV:', error));
+
+        // Reset modal on close
+        document.getElementById('businessModal').addEventListener('hidden.bs.modal', () => {
+            const modalBody = document.querySelector('#businessModal .modal-body');
+            modalBody.innerHTML = `
+                <img src="" class="img-fluid mb-3" id="modalImage" alt="">
+                <p id="modalDescription"></p>
+                <p><span class="highlight">Address:</span> <span id="modalAddress"></span></p>
+                <p><span class="highlight">Phone:</span> <span id="modalPhone"></span></p>
+                <p><span class="highlight">Services:</span> <span id="modalServices"></span></p>
+                <p><span class="highlight">Website:</span> <a id="modalWebsite" class="text-decoration-underline text-reset"></a></p>
+            `;
+        });
+    </script>
+</body>
+</html>
