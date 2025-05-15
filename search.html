@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covenant Pages - Search</title>
+    <title>Covenant Pages</title>
     <link rel="icon" type="image/x-icon" href="icon.png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -11,7 +10,6 @@
         /* Custom styles for hover effects and specific colors */
         .card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
         }
         .card:hover {
             transform: translateY(-5px);
@@ -21,7 +19,7 @@
             color: #5ba235;
         }
         .accent-bg {
-            background-color: #87bd6a;
+            background-color: #87bd6a; 
         }
         .header-bg {
             background: linear-gradient(to right, #a4dd86, #FFFFFF);
@@ -29,74 +27,53 @@
         .title-font {
             font-family: 'Poppins', sans-serif;
         }
-        .modal-content {
-            border-radius: 10px;
-        }
-        .modal-header {
-            background-color: #a4dd86;
-            color: #fff;
-        }
-        #modalImage {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-            max-height: 300px;
-            display: block;
-            margin: 0 auto;
-        }
-        .modal-body {
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-        .service-button {
-            margin: 5px;
-            transition: background-color 0.2s;
-        }
-        .service-button.active {
-            background-color: #5ba235 !important;
-            color: white !important;
-        }
-        .error-message {
-            color: #dc3545;
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body class="bg-white">
     <!-- Header -->
     <header class="header-bg shadow-sm">
-        <nav class="navbar navbar-expand-lg navbar-light container">
-            <div class="container-fluid">
-                <a class="navbar-brand title fw-bold fs-4 text-dark" href="#">
-                    <img src="logo.png" alt="Covenant Pages Logo" style="height: 40px; margin-right: 10px;">Covenant Pages
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark active" aria-current="page" href="search.html">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-light container">
+        <div class="container-fluid">
+            <a class="navbar-brand title fw-bold fs-4 text-dark" href="#">
+                <img src="logo.png" alt="Covenant Pages Logo" style="height: 40px; margin-right: 10px;">Covenant Pages
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="search.html">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="contact.html">Contact</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
     <!-- Main Content -->
     <main class="container py-5">
-        <h2 class="display-6 text-center fw-semibold text-dark mb-4">Business Categories</h2>
+        <section class="text-center">
+            <h2 class="display-5 fw-bold text-dark mb-4">Business Categories</h2>
+            
+        </section>
     </main>
 
-    
+    <!-- Footer -->
+    <footer class="bg-light py-4">
+        <div class="container text-center">
+            <p class="text-muted mb-0">© 2025 Covenant Pages. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
