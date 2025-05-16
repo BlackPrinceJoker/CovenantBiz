@@ -51,8 +51,8 @@
             color: #5ba235;
         }
         .category-btn:hover {
-            border-color: #4a8a2c;
-            color: #4a8a2c;
+            border-color: #6cc04a; /* Complementary light green */
+            color: #6cc04a;
         }
         .category-btn.active {
             background-color: #5ba235;
@@ -127,7 +127,7 @@
     </footer>
 
     <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popper filters/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script type="text/javascript">
         var gk_isXlsx = false;
@@ -182,10 +182,10 @@
             const container = document.getElementById('category-buttons');
             categories.forEach((category, index) => {
                 const button = document.createElement('button');
-                button.classNameMixin
                 button.className = `btn btn-outline-primary category-btn ${index === 0 ? 'active' : ''}`;
-                button.textContent = category ? category.replace(';', ',') : 'Uncategorized';
-                button.dataset.category = category || 'Uncategorized';
+                button.textContent = category ? category.replace(/;/g, ',') : 'Uncategorized';
+                // Use hyphenated category for data attribute
+                button.dataset.category = category ? category.replace(/[\s;]+/g, '-') : 'Uncategorized';
                 button.addEventListener('click', () => {
                     // Remove active class from all buttons
                     document.querySelectorAll('.category-btn').forEach(btn => {
@@ -194,18 +194,18 @@
                     // Add active class to clicked button
                     button.classList.add('active');
                     // Show cards for selected category
-                    filterCardsByCategory(category || 'Uncategorized');
+                    filterCardsByCategory(button.dataset.category);
                 });
                 container.appendChild(button);
             });
             // Show cards for the first category by default
-            filterCardsByCategory(categories[0] || 'Uncategorized');
+            filterCardsByCategory(categories[0] ? categories[0].replace(/[\s;]+/g, '-') : 'Uncategorized');
         }
 
         // Function to filter cards by category
         function filterCardsByCategory(selectedCategory) {
             document.querySelectorAll('.card-col').forEach(card => {
-                if (card.classList.contains(`category-${selectedCategory.replace(/\s+/g, '-')}`)) {
+                if (card.classList.contains(`category-${selectedCategory}`)) {
                     card.classList.add('active');
                 } else {
                     card.classList.remove('active');
@@ -218,8 +218,8 @@
             const container = document.getElementById('business-cards');
             businesses.forEach(business => {
                 const card = document.createElement('div');
-                // Add category class (replace spaces with hyphens for valid CSS class names)
-                const categoryClass = `category-${business.category ? business.category.replace(/\s+/g, '-') : 'Uncategorized'}`;
+                // Add category class (replace spaces and semicolons with hyphens)
+                const categoryClass = `category-${business.category ? business.category.replace(/[\s;]+/g, '-') : 'Uncategorized'}`;
                 card.className = `col card-col ${categoryClass}`;
                 card.innerHTML = `
                     <div class="card h-100 border-0 shadow-sm">
@@ -278,3 +278,13 @@
     </script>
 </body>
 </html>
+
+Explanation of Changes
+1. Hover Color
+Change: Updated .category-btn:hover to use #6cc04a (a light green complementary to #5ba235).
+css
+
+.category-btn:hover {
+    border-color: #6cc04a;
+    color:
+
