@@ -184,7 +184,7 @@
                 const button = document.createElement('button');
                 button.classNameMixin
                 button.className = `btn btn-outline-primary category-btn ${index === 0 ? 'active' : ''}`;
-                button.textContent = category || 'Uncategorized';
+                button.textContent = category ? category.replace(';', ',') : 'Uncategorized';
                 button.dataset.category = category || 'Uncategorized';
                 button.addEventListener('click', () => {
                     // Remove active class from all buttons
@@ -219,7 +219,7 @@
             businesses.forEach(business => {
                 const card = document.createElement('div');
                 // Add category class (replace spaces with hyphens for valid CSS class names)
-                const categoryClass = `category-${business.category ? business.category.replace(';', ',') : 'Uncategorized'}`;
+                const categoryClass = `category-${business.category ? business.category.replace(/\s+/g, '-') : 'Uncategorized'}`;
                 card.className = `col card-col ${categoryClass}`;
                 card.innerHTML = `
                     <div class="card h-100 border-0 shadow-sm">
