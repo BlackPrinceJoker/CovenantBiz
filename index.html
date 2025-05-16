@@ -181,8 +181,8 @@
                         <div class="card-body">
                             <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
                             <p class="card-text text-muted">${business.description}</p>
-                            <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
                             <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
+                            <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
                             <a href="${business.website || ''}" class="btn accent-bg mt-3">Visit Website</a>
                         </div>
                     </div>
