@@ -181,9 +181,9 @@
                         <div class="card-body">
                             <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
                             <p class="card-text text-muted">${business.description}</p>
-                            <p class="text-muted small"><span class="highlight">Address:</span> ${business.address}</p>
-                            <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone}</p>
-                            <a href="${business.website || '#'}" class="btn accent-bg mt-3">Visit Website</a>
+                            <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
+                            <p class="text-muted small"><span class="highlight">Email:</span> ${business.email || "No email available."}</p>
+                            <a href="${business.website || ''}" class="btn accent-bg mt-3">Visit Website</a>
                         </div>
                     </div>
                 `;
@@ -195,10 +195,14 @@
                     modalBody.innerHTML = `                       
                         <img src="${business.id + ".png"}" class="card-img-top" alt="${business.name}">
                         <p id="modalDescription" class="fw-semibold">${business.description || 'No description available.'}</p>
-                        <p id="modalAddress"><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
+                        <p id="modalOwner"><span class="highlight">Owner</span> ${business.phone || 'No owner listed.'}</p>
                         <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
-                        <p><span class="highlight">Services:</span> ${business.services || 'No services listed.'}</p>
-                        <a href="${business.website || '#'}" class="btn accent-bg mt-3">Visit Website</a>
+                        <p id="modalEmail"><span class="highlight">Email:</span> ${business.email || 'No email available.'}</p>
+                        
+                        <p id="modalServices"><span class="highlight">Services:</span> ${business.services || 'No services listed.'}</p>
+                        <p id="modalAddress"><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
+                        <p id="modalArea"><span class="highlight">Service Area:</span> ${business.services || 'No services listed.'}</p>
+                        <a href="${business.website || ''}" class="btn accent-bg mt-3">Visit Website</a>
                     `;
                     
                     const modal = new bootstrap.Modal(document.getElementById('businessModal'));
