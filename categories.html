@@ -36,6 +36,23 @@
             background-color: #a4dd86;
             color: #fff;
         }
+        /* Hide cards by default */
+        .card-col {
+            display: none;
+        }
+        /* Show cards for active category */
+        .card-col.active {
+            display: block;
+        }
+        /* Category button styles */
+        .category-btn {
+            margin: 0.2rem;
+        }
+        .category-btn.active {
+            background-color: #5ba235;
+            border-color: #5ba235;
+            color: #fff;
+        }
     </style>
 </head>
 <body class="bg-white">
@@ -69,6 +86,8 @@
     <!-- Main Content -->
     <main class="container py-5">
         <h2 class="display-6 text-center fw-semibold text-dark mb-4">Escambia and Santa Rosa Christian Business Directory</h2>
+        <!-- Category Toggle Buttons -->
+        <div class="d-flex flex-wrap justify-content-center mb-4" id="category-buttons"></div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" id="business-cards"></div>
     </main>
 
@@ -112,36 +131,28 @@
           return cell !== '' && cell != null;
         }
         function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                      row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                      headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
                 }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
             }
-        }
-        return gg_fileData[filenameTOM] || "";
+            return gk_fileData[filename] || "";
         }
 
         // Function to parse CSV
@@ -160,25 +171,61 @@
             return data;
         }
 
+        // Function to create category buttons
+        function createCategoryButtons(categories, businesses) {
+            const container = document.getElementById('category-buttons');
+            categories.forEach((category, index) => {
+                const button = document.createElement('button');
+                button.className = `btn btn-outline-primary category-btn ${index === 0 ? 'active' : ''}`;
+                button.textContent = category || 'Uncategorized';
+                button.dataset.category = category || 'Uncategorized';
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    // Show cards for selected category
+                    filterCardsByCategory(category || 'Uncategorized');
+                });
+                container.appendChild(button);
+            });
+            // Show cards for the first category by default
+            filterCardsByCategory(categories[0] || 'Uncategorized');
+        }
+
+        // Function to filter cards by category
+        function filterCardsByCategory(selectedCategory) {
+            document.querySelectorAll('.card-col').forEach(card => {
+                if (card.classList.contains(`category-${selectedCategory.replace(/\s+/g, '-')}`)) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
         // Function to create business cards
         function createBusinessCards(businesses) {
             const container = document.getElementById('business-cards');
             businesses.forEach(business => {
                 const card = document.createElement('div');
-                card.className = 'col';
+                // Add category class (replace spaces with hyphens for valid CSS class names)
+                const categoryClass = `category-${business.category ? business.category.replace(/\s+/g, '-') : 'Uncategorized'}`;
+                card.className = `col card-col ${categoryClass}`;
                 card.innerHTML = `
                     <div class="card h-100 border-0 shadow-sm">
                         <div class="card-body">
                             <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
                             <p class="card-text text-muted">${business.description}</p>
                             <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
-                       </div>
+                        </div>
                     </div>
                 `;
                 // Add click event to open modal
                 card.addEventListener('click', () => {
                     document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
-                    
                     const modalBody = document.querySelector('#businessModal .modal-body');
                     modalBody.innerHTML = `                       
                         <img src="${business.id + ".png"}" class="card-img-top" alt="${business.name}">
@@ -186,15 +233,14 @@
                         <p id="modalOwner"><span class="highlight">Owner</span> ${business.owner || 'No owner listed.'}</p>
                         <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
                         ${business.email ? `<p id="modalEmail"><span class="highlight">Email:</span> ${business.email || 'No email available.'}</p>` : ''}
-                        
                         <p id="modalServices"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : 'No services listed.'}</p>
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.address.replaceAll(';', ',') : 'No address available.'}</p>
                         <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area || 'No services listed.'}</p>
                         ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
-                   `; 
+                    `;
                     const modal = new bootstrap.Modal(document.getElementById('businessModal'));
                     modal.show();
-                })
+                });
                 container.appendChild(card);
             });
 
@@ -214,9 +260,15 @@
             .then(response => response.text())
             .then(csvText => {
                 const businesses = parseCSV(csvText);
+                // Get unique categories
+                const categories = [...new Set(businesses.map(b => b.category || 'Uncategorized'))];
+                // Create category buttons
+                createCategoryButtons(categories, businesses);
+                // Create business cards
                 createBusinessCards(businesses);
             })
             .catch(error => console.error('Error loading CSV:', error));
     </script>
 </body>
 </html>
+
