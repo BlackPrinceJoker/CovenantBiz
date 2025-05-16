@@ -199,9 +199,9 @@
                         <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
                         <p id="modalEmail"><span class="highlight">Email:</span> ${business.email || 'No email available.'}</p>
                         
-                        <p id="modalServices"><span class="highlight">Services:</span> ${business.services || 'No services listed.'}</p>
+                        <p id="modalServices"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : 'No services listed.'}</p>
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.adress.replaceAll(';', ',') : 'No address available.'}</p>
-                        <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area ? business.services.replaceAll(';', ',') : 'No services listed.'}</p>
+                        <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area || 'No services listed.'}</p>
                         <a href="${business.website || ''}" class="btn accent-bg mt-3">Visit Website</a>
                     `;
                     
