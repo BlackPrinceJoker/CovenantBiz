@@ -182,7 +182,7 @@
                             <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
                             <p class="card-text text-muted">${business.description}</p>
                             <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
-                            <p class="text-muted small"><span class="highlight">Services:</span> ${business.services || "No email available."}</p>
+                            <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.owner.replaceAll(';', ',') || "No services listed."}</p>
                             <a href="${business.website || ''}" class="btn accent-bg mt-3">Visit Website</a>
                         </div>
                     </div>
@@ -200,8 +200,8 @@
                         <p id="modalEmail"><span class="highlight">Email:</span> ${business.email || 'No email available.'}</p>
                         
                         <p id="modalServices"><span class="highlight">Services:</span> ${business.services || 'No services listed.'}</p>
-                        <p id="modalAddress"><span class="highlight">Address:</span> ${business.address || 'No address available.'}</p>
-                        <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area || 'No services listed.'}</p>
+                        <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.owner.replaceAll(';', ',') || 'No address available.'}</p>
+                        <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area ? business.owner.replaceAll(';', ',') || 'No services listed.'}</p>
                         <a href="${business.website || ''}" class="btn accent-bg mt-3">Visit Website</a>
                     `;
                     
