@@ -197,7 +197,7 @@
                         <p id="modalDescription" class="fw-semibold">${business.description || 'No description available.'}</p>
                         <p id="modalOwner"><span class="highlight">Owner</span> ${business.owner || 'No owner listed.'}</p>
                         <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
-                        <p id="modalEmail"><span class="highlight">Email:</span> ${business.email || 'No email available.'}</p>
+                        ${business.email ? `<p id="modalEmail"><span class="highlight">Email:</span> ${business.email || 'No email available.'}</p>` : ''}
                         
                         <p id="modalServices"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : 'No services listed.'}</p>
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.address.replaceAll(';', ',') : 'No address available.'}</p>
