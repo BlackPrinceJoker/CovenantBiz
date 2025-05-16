@@ -183,8 +183,8 @@
                             <p class="card-text text-muted">${business.description}</p>
                             <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
                             <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
-                            <a href="${business.website || 'nothing'}" class="btn accent-bg mt-3">Visit Website</a>
-                        </div>
+                            ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
+                       </div>
                     </div>
                 `;
                 // Add click event to open modal
