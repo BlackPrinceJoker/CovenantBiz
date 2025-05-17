@@ -192,7 +192,7 @@
                             <p class="card-text text-muted">${business.description}</p>
                             <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
                             <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
-                            <div class="d-flex justify-content-end mt-auto p-3">
+                            <div class="d-flex justify-content-end position-absolute bottom-0 end-0 p-3">
                                 <span class="small hover-text">More Details</span>
                             </div>
                        </div>
@@ -214,10 +214,6 @@
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.address.replaceAll(';', ',') : 'No address available.'}</p>
                         <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area || 'No services listed.'}</p>
                         ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
-<<<<<<< HEAD
-=======
-                         
->>>>>>> e471035c5e26dd40aab953758504ff96646e3706
                    `; 
                     const modal = new bootstrap.Modal(document.getElementById('businessModal'));
                     modal.show();
