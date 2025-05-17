@@ -188,7 +188,9 @@
                             <p class="card-text text-muted">${business.description}</p>
                             <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
                             <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
-                            ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
+                             <div class="d-flex justify-content-end p-3">
+                                 <span class="small hover-text">More Details</span>
+                             </div>
                        </div>
                     </div>
                 `;
@@ -207,10 +209,7 @@
                         <p id="modalServices"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : 'No services listed.'}</p>
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.address.replaceAll(';', ',') : 'No address available.'}</p>
                         <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area || 'No services listed.'}</p>
-                        <div class="d-flex justify-content-end p-3">
-                            ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
-                             <span class="small hover-text">More Details</span>
-                         </div>
+                        ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
                    `; 
                     const modal = new bootstrap.Modal(document.getElementById('businessModal'));
                     modal.show();
