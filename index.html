@@ -185,42 +185,58 @@
                 const card = document.createElement('div');
                 card.className = 'col';
                 card.innerHTML = `
-                    <div class="card h-100 border-0 shadow">
-                        <img src="${business.id + ".png"}" class="card-img-top" alt="${business.name}">
-                        <div class="card-body">
-                            <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
-                            <p class="card-text text-muted">${business.description}</p>
-                            <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
-                            <p class="text-muted small"><span class="highlight">Phone:</span> ${business.phone || "No phone available."}</p>
-                            <br><br>
-                            <div class="d-flex justify-content-end position-absolute bottom-0 end-0 p-3">
-                                <span class="small hover-text">More Details</span>
+                    <div class="card h-100 border-0 shadow flip-card">
+                        <div class="flip-card-inner">
+                            <!-- Front Side -->
+                            <div class="flip-card-front">
+                                <img src="${business.id + '.png'}" class="card-img-top" alt="${business.name}">
+                                <div class="card-body">
+                                    <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
+                                    <p class="card-text text-muted">${business.description}</p>
+                                    <p class="text-muted small"><span class="highlight">Services:</span> ${
+                                        business.services ? business.services.replaceAll(';', ',') : 'No services listed.'
+                                    }</p>
+                                    <p class="text-muted small"><span class="highlight">Phone:</span> ${
+                                        business.phone || 'No phone available.'
+                                    }</p>
+                                    <div class="d-flex justify-content-end position-absolute bottom-0 end-0 p-3">
+                                        <span class="small hover-text">Hover for Details</span>
+                                    </div>
+                                </div>
                             </div>
-                       </div>
+                            <!-- Back Side -->
+                            <div class="flip-card-back card-body d-flex flex-column">
+                                <img src="${business.id + '.png'}" class="card-img-top" alt="${business.name}">
+                                <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
+                                <p class="fw-semibold">${business.description || 'No description available.'}</p>
+                                <p><span class="highlight">Owner:</span> ${business.owner || 'No owner listed.'}</p>
+                                <p><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
+                                ${
+                                    business.email
+                                        ? `<p><span class="highlight">Email:</span> ${business.email}</p>`
+                                        : ''
+                                }
+                                <p><span class="highlight">Services:</span> ${
+                                    business.services ? business.services.replaceAll(';', ',') : 'No services listed.'
+                                }</p>
+                                <p><span class="highlight">Address:</span> ${
+                                    business.address ? business.address.replaceAll(';', ',') : 'No address available.'
+                                }</p>
+                                <p><span class="highlight">Service Area:</span> ${
+                                    business.area || 'No service area listed.'
+                                }</p>
+                                ${
+                                    business.website
+                                        ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>`
+                                        : ''
+                                }
+                            </div>
+                        </div>
                     </div>
                 `;
-                // Add click event to open modal
-                card.addEventListener('click', () => {
-                    document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
-                    
-                    const modalBody = document.querySelector('#businessModal .modal-body');
-                    modalBody.innerHTML = `                       
-                        <img src="${business.id + ".png"}" class="card-img-top" alt="${business.name}">
-                        <p id="modalDescription" class="fw-semibold">${business.description || 'No description available.'}</p>
-                        <p id="modalOwner"><span class="highlight">Owner:</span> ${business.owner || 'No owner listed.'}</p>
-                        <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
-                        ${business.email ? `<p id="modalEmail"><span class="highlight">Email:</span> ${business.email || 'No email available.'}</p>` : ''}
-                        
-                        <p id="modalServices"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : 'No services listed.'}</p>
-                        <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.address.replaceAll(';', ',') : 'No address available.'}</p>
-                        <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area || 'No services listed.'}</p>
-                        ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
-                   `; 
-                    const modal = new bootstrap.Modal(document.getElementById('businessModal'));
-                    modal.show();
-                })
                 container.appendChild(card);
             });
+        }
 
             // Add hover effects
             document.querySelectorAll('.card').forEach(card => {
