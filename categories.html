@@ -20,7 +20,7 @@
  .hover-text {
   color: #333; /* Dark gray text, matches subdued style */
   transition: color 0.2s ease-in-out; /* Smooth transition */
-  border: 2px solid #333;
+  border: 1px solid #333;
   border-radius: 5px;
 }
 
@@ -234,7 +234,7 @@
          <p class="card-text text-muted">${business.description}</p>
          <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
          <br>
-         <p class="small hover-text" style="text-align:right">More Details</p>
+         <span class="small hover-text" style="text-align:right">More Details</span>
      </div>
  </div>
  `;
