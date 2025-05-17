@@ -17,6 +17,18 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+         .hover-text {
+          color: #333; /* Dark gray text, matches subdued style */
+          transition: color 0.2s ease-in-out; /* Smooth transition */
+          border: 1px solid #333;
+          border-radius: 5px;
+          padding: 0px 5px;
+          margin: 0px;
+        }
+
+        .hover-text:hover {
+          color: #86a4dd; /* Slightly lighter text on hover */
+        }
         .highlight {
             color: #4a77cc;
         }
@@ -195,7 +207,10 @@
                         <p id="modalServices"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : 'No services listed.'}</p>
                         <p id="modalAddress"><span class="highlight">Address:</span> ${business.address ? business.address.replaceAll(';', ',') : 'No address available.'}</p>
                         <p id="modalArea"><span class="highlight">Service Area:</span> ${business.area || 'No services listed.'}</p>
-                        ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
+                        <div class="d-flex justify-content-end p-3">
+                            ${business.website ? `<a href="${business.website}" class="btn accent-bg mt-3">Visit Website</a>` : ''}
+                             <span class="small hover-text">More Details</span>
+                         </div>
                    `; 
                     const modal = new bootstrap.Modal(document.getElementById('businessModal'));
                     modal.show();
