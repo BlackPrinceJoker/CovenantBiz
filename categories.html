@@ -219,11 +219,12 @@
  card.className = `col card-col ${categoryClass}`;
  card.innerHTML = `
  <div class="card h-100 border-0 shadow-sm">
- <div class="card-body">
- <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
- <p class="card-text text-muted">${business.description}</p>
- <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
- </div>
+     <div class="card-body">
+         <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
+         <p class="card-text text-muted">${business.description}</p>
+         <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
+         <p class="text-muted small hover-text" style="text-align:right">More Details</p>
+     </div>
  </div>
  `;
  // Add click event to open modal
