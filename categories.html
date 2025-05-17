@@ -17,6 +17,14 @@
  transform: translateY(-5px);
  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
  }
+ .hover-text {
+  color: #333; /* Dark gray text, matches subdued style */
+  transition: color 0.2s ease-in-out; /* Smooth transition */
+}
+
+.hover-text:hover {
+  color: #1a1a1a; /* Slightly darker text on hover */
+}
  .highlight {
  color: #4a77cc;
  }
@@ -223,6 +231,7 @@
          <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
          <p class="card-text text-muted">${business.description}</p>
          <p class="text-muted small"><span class="highlight">Services:</span> ${business.services ? business.services.replaceAll(';', ',') : "No services listed."}</p>
+         <br>
          <p class="text-muted small hover-text" style="text-align:right">More Details</p>
      </div>
  </div>
