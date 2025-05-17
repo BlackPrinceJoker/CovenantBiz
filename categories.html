@@ -187,7 +187,7 @@
  const container = document.getElementById('category-buttons');
  categories.forEach((category, index) => {
  const button = document.createElement('button');
- button.className = `btn btn-outline-primary category-btn ${index === 0 ? 'active' : ''}`;
+ button.className = `btn category-btn ${index === 0 ? 'active' : ''}`;
  button.textContent = category ? category.replace(/;/g, ',') : 'Uncategorized';
  // Use sanitized category for data attribute
  button.dataset.category = sanitizeCategory(category);
