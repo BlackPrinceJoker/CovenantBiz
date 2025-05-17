@@ -15,7 +15,7 @@
         }
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
         }
         .card-body {
             padding-bottom: 5px; /* Ensure space for the absolutely positioned element */
@@ -185,7 +185,7 @@
                 const card = document.createElement('div');
                 card.className = 'col';
                 card.innerHTML = `
-                    <div class="card h-100 border-0 shadow-sm">
+                    <div class="card h-100 border-0 shadow-lg">
                         <img src="${business.id + ".png"}" class="card-img-top" alt="${business.name}">
                         <div class="card-body">
                             <h3 class="card-title fs-4 fw-semibold">${business.name}</h3>
