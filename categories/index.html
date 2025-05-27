@@ -91,13 +91,13 @@
  <div class="collapse navbar-collapse" id="navbarNav">
  <ul class="navbar-nav ms-auto">
  <li class="nav-item">
- <a class="nav-link text-alt" href="https://covenantpages.com/">Home</a>
+ <a class="nav-link text-light" href="https://covenantpages.com/">Home</a>
  </li>
  <li class="nav-item">
- <a class="nav-link text-alt" href="https://covenantpages.com/categories">Categories</a>
+ <a class="nav-link text-light" href="https://covenantpages.com/categories">Categories</a>
  </li>
  <li class="nav-item">
- <a class="nav-link text-alt" href="https://covenantpages.com/contact">Contact</a>
+ <a class="nav-link text-light" href="https://covenantpages.com/contact">Contact</a>
  </li>
  </ul>
  </div>
@@ -251,7 +251,7 @@
  document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
  const modalBody = document.querySelector('#businessModal .modal-body');
  modalBody.innerHTML = ` 
- <img src="'https://covenantpages.com/'${business.id + '.png'}" class="card-img-top" alt="${business.name}">
+ <img src="'https://covenantpages.com/' ${+ business.id + '.png'}" class="card-img-top" alt="${business.name}">
  <p id="modalDescription" class="fw-semibold">${business.description || 'No description available.'}</p>
  <p id="modalOwner"><span class="highlight">Owner:</span> ${business.owner || 'No owner listed.'}</p>
  <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
