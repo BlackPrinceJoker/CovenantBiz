@@ -251,7 +251,7 @@
  document.getElementById('businessModalLabel').textContent = business.name || 'Unknown Business';
  const modalBody = document.querySelector('#businessModal .modal-body');
  modalBody.innerHTML = ` 
- <img src="'https://covenantpages.com/'${+ business.id + '.png'}" class="card-img-top" alt="${business.name}">
+ <img src="https://covenantpages.com/${business.id}.png" class="card-img-top" alt="${business.name}">
  <p id="modalDescription" class="fw-semibold">${business.description || 'No description available.'}</p>
  <p id="modalOwner"><span class="highlight">Owner:</span> ${business.owner || 'No owner listed.'}</p>
  <p id="modalPhone"><span class="highlight">Phone:</span> ${business.phone || 'No phone available.'}</p>
